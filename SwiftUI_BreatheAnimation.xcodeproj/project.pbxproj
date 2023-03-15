@@ -9,16 +9,16 @@
 /* Begin PBXBuildFile section */
 		2D1A4C7129C1D1690094E462 /* SwiftUI_BreatheAnimationApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1A4C7029C1D1690094E462 /* SwiftUI_BreatheAnimationApp.swift */; };
 		2D1A4C7329C1D1690094E462 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1A4C7229C1D1690094E462 /* ContentView.swift */; };
-		2D1A4C7529C1D16E0094E462 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A4C7429C1D16E0094E462 /* Assets.xcassets */; };
 		2D1A4C7829C1D16E0094E462 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A4C7729C1D16E0094E462 /* Preview Assets.xcassets */; };
+		2D1A4C7F29C1D17F0094E462 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A4C7E29C1D17F0094E462 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		2D1A4C6D29C1D1690094E462 /* SwiftUI_BreatheAnimation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUI_BreatheAnimation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D1A4C7029C1D1690094E462 /* SwiftUI_BreatheAnimationApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUI_BreatheAnimationApp.swift; sourceTree = "<group>"; };
 		2D1A4C7229C1D1690094E462 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		2D1A4C7429C1D16E0094E462 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2D1A4C7729C1D16E0094E462 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		2D1A4C7E29C1D17F0094E462 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,7 +53,7 @@
 			children = (
 				2D1A4C7029C1D1690094E462 /* SwiftUI_BreatheAnimationApp.swift */,
 				2D1A4C7229C1D1690094E462 /* ContentView.swift */,
-				2D1A4C7429C1D16E0094E462 /* Assets.xcassets */,
+				2D1A4C7E29C1D17F0094E462 /* Assets.xcassets */,
 				2D1A4C7629C1D16E0094E462 /* Preview Content */,
 			);
 			path = SwiftUI_BreatheAnimation;
@@ -125,8 +125,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D1A4C7F29C1D17F0094E462 /* Assets.xcassets in Resources */,
 				2D1A4C7829C1D16E0094E462 /* Preview Assets.xcassets in Resources */,
-				2D1A4C7529C1D16E0094E462 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
