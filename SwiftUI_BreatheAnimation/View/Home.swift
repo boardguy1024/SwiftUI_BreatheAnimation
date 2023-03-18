@@ -10,8 +10,11 @@ import SwiftUI
 struct Home: View {
 
     @State var currentType: BreatheType = sampleTypes[0]
-
     @Namespace var animation
+
+    // MARK: Animation Properties
+    @State var showBreatheView: Bool = false
+    @State var startAnimating: Bool = false
 
     var body: some View {
         ZStack {
@@ -48,7 +51,7 @@ struct Home: View {
 
             }
             .padding()
-
+            .opacity(showBreatheView ? 0 : 1)
 
             GeometryReader { proxy in
                 let size = proxy.size
@@ -59,8 +62,10 @@ struct Home: View {
                     Text("Breathe to reduce")
                         .font(.title3)
                         .foregroundColor(.white)
+                        .opacity(showBreatheView ? 0 : 1)
 
 
+                    // 3つのoptionボタンエリア
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 12) {
                             ForEach(sampleTypes) { type in
@@ -90,6 +95,28 @@ struct Home: View {
                         }
                         .frame(width: size.width, height: 60)
                     }
+                    .opacity(showBreatheView ? 0 : 1)
+
+                    // STARTボタン
+                    Button(action: startBreathing) {
+                        Text(showBreatheView ? "Finish Breathe" : "START")
+                            .fontWeight(.semibold)
+                            .foregroundColor(showBreatheView ? Color.white.opacity(0.6) : Color.black)
+                            .padding(.vertical, 15)
+                            .frame(maxWidth: .infinity)
+                            .background {
+                                if showBreatheView {
+                                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                        .stroke(Color.white.opacity(0.6))
+                                } else {
+                                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                        .fill(currentType.color.gradient)
+                                }
+
+                            }
+                    }
+                    .padding()
+
                 }
                 .frame(width: size.width, height: size.height, alignment: .bottom)
             }
@@ -106,9 +133,14 @@ struct Home: View {
                     .fill(currentType.color.gradient.opacity(0.5))
                     .frame(width: 150, height: 150)
                     // 150 / 2 = 75 （真ん中より75ずらすことで Circleの左が原点となる
-                    .offset(x: 75)
+                    // startAnimationの場合、
+                    // offset = 0にすることで、75ずつずらした丸がみんな真ん中に集まってピッタリかなさる
+                    .offset(x: startAnimating ? 0 : 75)
                     // Circleのtangentを基準に 45角度で 8個を回す
                     .rotationEffect(.init(degrees: Double(index) * 45))
+                    // startingAnimationの場合
+                    // degree -45にすることで 反時計回りの 45度移動（３時 -> 12時）
+                    .rotationEffect(.init(degrees: startAnimating ? -45 : 0))
             }
         }
         .frame(height: size.width - 40)
@@ -148,6 +180,22 @@ struct Home: View {
                 }
         }
         .ignoresSafeArea()
+    }
+
+    // MARK: Breathing Action
+    func startBreathing() {
+        withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)) {
+            showBreatheView.toggle()
+        }
+
+        if showBreatheView {
+            // delay 0.1後、3秒間 startAnimating を参照しているところは animationされる
+            withAnimation(.easeInOut(duration: 3).delay(0.1)) {
+                startAnimating = true
+            }
+        } else {
+
+        }
     }
 }
 
