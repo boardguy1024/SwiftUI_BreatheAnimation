@@ -16,10 +16,47 @@ struct Home: View {
     @State var showBreatheView: Bool = false
     @State var startAnimating: Bool = false
 
+    //MARK: Timer Properties
+    @State var timerCount: CGFloat = 0
+    @State var breatheAction: String = "Breathe In"
+    @State var count: Int = 0
+
     var body: some View {
         ZStack {
             Background()
             Content()
+
+            Text(breatheAction)
+                .font(.largeTitle)
+                .foregroundColor(.white)
+                .frame(maxHeight: .infinity, alignment: .top)
+                .padding(.top, 50)
+                .opacity(showBreatheView ? 1: 0)
+                .animation(.easeInOut(duration: 1), value: breatheAction)
+        }
+        // 0.1秒ごとにTimerを発火させる
+        .onReceive(Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()) { _ in // output is currentTIme
+            if showBreatheView {
+
+                if timerCount >= 3.3 {
+                    timerCount = 0
+                    breatheAction = (breatheAction == "Breathe Out" ? "Breathe In" : "Breathe Out")
+
+                    // 0.3秒delay後にanimationをtoggle
+                    withAnimation(.easeInOut(duration: 3).delay(0.3)) {
+                        startAnimating.toggle()
+                    }
+
+                } else {
+                    timerCount += 0.1
+                }
+
+                // timer count
+                count = 3 - Int(timerCount)
+            } else {
+                // resetting
+                timerCount = 0
+            }
         }
     }
 
@@ -143,7 +180,18 @@ struct Home: View {
                     .rotationEffect(.init(degrees: startAnimating ? -45 : 0))
             }
         }
+        // startAnimating -> 丸が重なっていく -> scaleを 0.7に
+        // startAnimating: false -> 丸が分散 -> scaleを 1に戻す
+        .scaleEffect(startAnimating ? 0.7 : 1)
         .frame(height: size.width - 40)
+        .overlay {
+            Text("\(count == 0 ? 3 : count)")
+                .font(.title)
+                .fontWeight(.semibold)
+                .foregroundColor(.white)
+                .animation(.easeInOut, value: count)
+                .opacity(showBreatheView ? 1 : 0)
+        }
     }
 
 
@@ -157,6 +205,7 @@ struct Home: View {
                 .frame(width: size.width, height: size.height)
                 .clipped()
                 .offset(y: -50)
+                .blur(radius: startAnimating ? 5 : 0, opaque: true)
                 .overlay {
                     ZStack {
                         // 上 2/3の色グラデー
@@ -194,7 +243,10 @@ struct Home: View {
                 startAnimating = true
             }
         } else {
-
+            // アニメーション中、ボタンタップで中止の場合、元に戻すのは１秒にする
+            withAnimation(.easeInOut(duration: 1)) {
+                startAnimating = false
+            }
         }
     }
 }
